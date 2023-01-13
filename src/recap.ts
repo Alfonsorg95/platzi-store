@@ -8,10 +8,12 @@ const suma = (a: number, b: number) => {
 suma(12, 23);
 
 class Person {
-  age = myAge;
-  name = myName;
+  constructor(private age: number, private name: string) {}
 
   getSummary() {
-    return 'my name is ${this.name}, ${this.age}';
+    return `my name is ${this.name}, ${this.age}`;
   }
 }
+
+const yomismo = new Person(myAge, myName);
+yomismo.getSummary();
