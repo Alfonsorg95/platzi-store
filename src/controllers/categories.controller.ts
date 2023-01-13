@@ -7,7 +7,9 @@ export class CategoriesController {
     @Param('productId') productId: string,
     @Param('categoryId') categoryId: string,
   ) {
-    return `category ${categoryId} product ${productId}`;
+    return {
+      message: `category ${categoryId} product ${productId}`,
+    };
   }
   //Este endpoint recive mas de un parametro
 }
