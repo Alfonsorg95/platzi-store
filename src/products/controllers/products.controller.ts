@@ -12,9 +12,12 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 
-import { ProductsService } from 'src/services/products.service';
+import { ProductsService } from 'src/products/services/products.service';
 //import { ParseIntPipe } from 'src/common/parse-int.pipe';
-import { CreateProductDto, UpdateProductDto } from 'src/dtos/products.dtos';
+import {
+  CreateProductDto,
+  UpdateProductDto,
+} from 'src/products/dtos/products.dtos';
 
 @Controller('products')
 export class ProductsController {
