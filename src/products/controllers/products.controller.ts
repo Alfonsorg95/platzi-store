@@ -2,7 +2,6 @@ import {
   Controller,
   Get,
   Param,
-  Query,
   Post,
   Body,
   Put,
@@ -11,14 +10,16 @@ import {
   HttpCode,
   ParseIntPipe,
 } from '@nestjs/common';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
 import { ProductsService } from 'src/products/services/products.service';
 //import { ParseIntPipe } from 'src/common/parse-int.pipe';
 import {
   CreateProductDto,
   UpdateProductDto,
-} from 'src/products/dtos/products.dtos';
+} from 'src/products/dtos/products.dto';
 
+@ApiTags('Products')
 @Controller('products')
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
@@ -42,11 +43,8 @@ export class ProductsController {
   //Este endpoint recive un parametro
 
   @Get()
-  getProducts(
-    @Query('limit') limit = 10,
-    @Query('offset') offset = 0,
-    @Query('brand') brand: string,
-  ) {
+  @ApiOperation({ summary: 'List of all products' })
+  getProducts() {
     return this.productsService.findAll();
 
     /* return {
