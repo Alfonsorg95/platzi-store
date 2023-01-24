@@ -24,7 +24,9 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This project was made along with the [NestJS](https://github.com/nestjs/nest) courses and will growing while i learn.
+
+Also this project is deployed on [Render](https://render.com/), you can run it locally with the instructions below or check the deployed app [here](https://platzi-store.onrender.com)
 
 ## Installation
 
@@ -57,6 +59,13 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+## Documentation
+
+The documentation is made with [swagger](https://github.com/nestjs/swagger) and will be changing as the project grows. You can check this documentation:
+
+- locally: `http://localhost:<port>/docs`
+- [app documentation](https://platzi-store.onrender.com/docs)
 
 ## Support
 
