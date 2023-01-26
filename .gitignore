@@ -36,3 +36,5 @@ lerna-debug.log*
 
 # Eviroment
 *.env
+
+/postgres_data

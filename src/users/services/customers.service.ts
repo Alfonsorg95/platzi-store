@@ -1,26 +1,22 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 import { Customer } from '../entities/customer.entity';
 import { CreateCustomerDto, UpdateCustomerDto } from '../dtos/customer.dto';
 
 @Injectable()
 export class CustomersService {
-  private counterId = 1;
-  private customers: Customer[] = [
-    {
-      id: 1,
-      name: 'Nicolas',
-      lastName: 'Molina',
-      phone: '3111111212',
-    },
-  ];
+  constructor(
+    @InjectRepository(Customer) private customersRepo: Repository<Customer>,
+  ) {}
 
   findAll() {
-    return this.customers;
+    return this.customersRepo.find();
   }
 
-  findOne(id: number) {
-    const customer = this.customers.find((item) => item.id === id);
+  async findOne(id: number) {
+    const customer = await this.customersRepo.findOneBy({ id });
     if (!customer) {
       throw new NotFoundException(`Customer #${id} not found`);
     }
@@ -28,31 +24,18 @@ export class CustomersService {
   }
 
   create(data: CreateCustomerDto) {
-    this.counterId = this.counterId + 1;
-    const newCustomer = {
-      id: this.counterId,
-      ...data,
-    };
-    this.customers.push(newCustomer);
-    return newCustomer;
+    const newCustomer = this.customersRepo.create(data);
+    return this.customersRepo.save(newCustomer);
   }
 
-  update(id: number, changes: UpdateCustomerDto) {
-    const customer = this.findOne(id);
-    const index = this.customers.findIndex((item) => item.id === id);
-    this.customers[index] = {
-      ...customer,
-      ...changes,
-    };
-    return this.customers[index];
+  async update(id: number, changes: UpdateCustomerDto) {
+    const customer = await this.findOne(id);
+    this.customersRepo.merge(customer, changes);
+    return this.customersRepo.save(customer);
   }
 
-  remove(id: number) {
-    const index = this.customers.findIndex((item) => item.id === id);
-    if (index === -1) {
-      throw new NotFoundException(`Customer #${id} not found`);
-    }
-    this.customers.splice(index, 1);
-    return true;
+  async remove(id: number) {
+    await this.findOne(id);
+    return this.customersRepo.delete(id);
   }
 }

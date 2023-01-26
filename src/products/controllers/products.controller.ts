@@ -46,20 +46,11 @@ export class ProductsController {
   @ApiOperation({ summary: 'List of all products' })
   getProducts() {
     return this.productsService.findAll();
-
-    /* return {
-      message: `products: limit:${limit} offset:${offset} brand: ${brand}`,
-    }; */
   }
-  //Este endpoint recive un query
 
   @Post()
   create(@Body() payload: CreateProductDto) {
     return this.productsService.create(payload);
-    /* return {
-      message: 'Create action',
-      payload,
-    }; */
   }
 
   @Put(':id')
@@ -68,15 +59,10 @@ export class ProductsController {
     @Body() payload: UpdateProductDto,
   ) {
     return this.productsService.update(id, payload);
-    /* return {
-      id,
-      payload,
-    }; */
   }
 
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.delete(id);
-    //return id;
   }
 }
