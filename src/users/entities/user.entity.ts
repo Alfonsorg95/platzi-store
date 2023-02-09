@@ -1,7 +1,16 @@
-import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 
-@Entity({ name: 'Users' })
-export class User {
+import { Customer } from './customer.entity';
+import { CreateUpdateColumn } from '../../common/create-update.entity';
+
+@Entity({ name: 'users' })
+export class User extends CreateUpdateColumn {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -13,4 +22,8 @@ export class User {
 
   @Column({ type: 'varchar' })
   role: string;
+
+  @OneToOne(() => Customer, (customer) => customer.user, { nullable: true })
+  @JoinColumn({ name: 'customer_id' })
+  customer: Customer;
 }

@@ -19,7 +19,7 @@ import config from 'src/config';
           password: configService.postgres.password,
           database: configService.postgres.dbName,
           entities: [],
-          synchronize: true,
+          synchronize: false,
           autoLoadEntities: true,
         };
       },

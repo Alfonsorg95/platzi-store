@@ -1,7 +1,19 @@
-import { PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
+import {
+  PrimaryGeneratedColumn,
+  Column,
+  Entity,
+  ManyToOne,
+  ManyToMany,
+  Index,
+  JoinColumn,
+} from 'typeorm';
 
-@Entity({ name: 'Products' })
-export class Product {
+import { Brand } from './brand.entity';
+import { Category } from './category.entity';
+import { CreateUpdateColumn } from '../../common/create-update.entity';
+
+@Entity({ name: 'products' })
+export class Product extends CreateUpdateColumn {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -11,6 +23,7 @@ export class Product {
   @Column({ type: 'text' })
   description: string;
 
+  @Index()
   @Column({ type: 'int' })
   price: number;
 
@@ -19,4 +32,11 @@ export class Product {
 
   @Column({ type: 'varchar' })
   image: string;
+
+  @ManyToOne(() => Brand, (brand) => brand.products)
+  @JoinColumn({ name: 'brand_id' })
+  brand: Brand;
+
+  @ManyToMany(() => Category, (category) => category.products)
+  categories: Category[];
 }
